@@ -1,6 +1,7 @@
-import { Global, Module } from '@nestjs/common';
+import { Global, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { SakakConfigModule } from './config/config.module';
 import { getTypeOrmModule } from './database/typeorm/typeorm.module';
+import { TransactionMiddleware } from './middleware/transaction.middleware';
 
 const modules = [SakakConfigModule];
 
@@ -10,4 +11,8 @@ const modules = [SakakConfigModule];
   providers: [],
   exports: [...modules],
 })
-export class CoreModule {}
+export class CoreModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(TransactionMiddleware).forRoutes('*');
+  }
+}
