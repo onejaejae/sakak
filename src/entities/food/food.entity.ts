@@ -50,4 +50,43 @@ export class Food extends BaseEntity {
 
   @Column({ type: 'float', default: 0 })
   transFat: number;
+
+  static of(
+    foodCd: string,
+    groupName: string,
+    foodName: string,
+    researchYear: string,
+    makerName: string,
+    refName: string,
+    servingSize: number,
+    calorie: number,
+    carbohydrate: number,
+    protein: number,
+    province: number,
+    sugars: number,
+    salt: number,
+    cholesterol: number,
+    saturatedFattyAcids: number,
+    transFat: number,
+  ) {
+    const food = new Food();
+    food.foodCd = foodCd;
+    food.groupName = groupName;
+    food.foodName = foodName;
+    food.researchYear = researchYear;
+    food.makerName = makerName;
+    food.refName = refName;
+    food.servingSize = servingSize;
+    food.calorie = calorie;
+    food.carbohydrate = carbohydrate;
+    food.protein = protein;
+    food.province = province;
+    food.sugars = sugars;
+    food.salt = salt;
+    food.cholesterol = cholesterol;
+    food.saturatedFattyAcids = saturatedFattyAcids;
+    food.transFat = transFat;
+
+    return food;
+  }
 }
