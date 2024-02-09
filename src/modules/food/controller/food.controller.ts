@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { FoodService } from '../service/food.service';
 import { CreateFoodDto } from 'src/common/request/food/createFoodDto';
+import { UpdateFoodDto } from 'src/common/request/food/updateFoodDto';
 
 @Controller('foods')
 export class FoodController {
@@ -14,5 +15,13 @@ export class FoodController {
   @Post('/')
   async createFood(@Body() createFoodDto: CreateFoodDto) {
     return this.foodService.createFood(createFoodDto);
+  }
+
+  @Patch('/:foodId')
+  async updateFood(
+    @Param('foodId') foodId: number,
+    @Body() updateFoodDto: UpdateFoodDto,
+  ) {
+    return this.foodService.updateFood(foodId, updateFoodDto);
   }
 }

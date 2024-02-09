@@ -1,3 +1,4 @@
+import { UpdateFoodDto } from 'src/common/request/food/updateFoodDto';
 import { BaseEntity } from 'src/core/database/typeorm/base.entity';
 import { Column, Entity } from 'typeorm';
 
@@ -88,5 +89,45 @@ export class Food extends BaseEntity {
     food.transFat = transFat;
 
     return food;
+  }
+
+  updateFood(updateFoodDto: UpdateFoodDto) {
+    const {
+      foodCd,
+      groupName,
+      foodName,
+      researchYear,
+      makerName,
+      refName,
+      servingSize,
+      calorie,
+      carbohydrate,
+      protein,
+      province,
+      sugars,
+      salt,
+      saturatedFattyAcids,
+      cholesterol,
+      transFat,
+    } = updateFoodDto;
+
+    this.foodCd = foodCd;
+    this.groupName = groupName;
+    this.foodName = foodName;
+    this.researchYear = researchYear;
+    this.makerName = makerName;
+    this.refName = refName;
+    this.servingSize = servingSize;
+    this.calorie = calorie;
+    this.carbohydrate = carbohydrate;
+    this.protein = protein;
+    this.province = province;
+    this.sugars = sugars;
+    this.salt = salt;
+    this.cholesterol = cholesterol;
+    this.saturatedFattyAcids = saturatedFattyAcids;
+    this.transFat = transFat;
+
+    return this;
   }
 }
