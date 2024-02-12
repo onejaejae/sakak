@@ -1,8 +1,13 @@
-import { Module } from '@nestjs/common';
+import { ClassProvider, Module } from '@nestjs/common';
 import { FoodRepository } from './food.repository';
+import { FoodRepositoryKey } from './food-repository.interface';
 
+export const foodRepository: ClassProvider = {
+  provide: FoodRepositoryKey,
+  useClass: FoodRepository,
+};
 @Module({
-  providers: [FoodRepository],
-  exports: [FoodRepository],
+  providers: [foodRepository],
+  exports: [foodRepository],
 })
 export class FoodRepositoryModule {}

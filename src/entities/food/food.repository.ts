@@ -5,9 +5,15 @@ import { Food } from './food.entity';
 import { GenericTypeOrmRepository } from 'src/core/database/typeorm/generic-typeorm.repository';
 import { GetFoodsQueryDto } from 'src/common/request/food/getFoodsQueryDto';
 import { PaginationBuilder } from 'src/common/pagination/pagination.builder';
+import { plainToInstance } from 'class-transformer';
+import { PaginationResponse } from 'src/common/pagination/pagination.response';
+import { IFoodRepository } from './food-repository.interface';
 
 @Injectable()
-export class FoodRepository extends GenericTypeOrmRepository<Food> {
+export class FoodRepository
+  extends GenericTypeOrmRepository<Food>
+  implements IFoodRepository
+{
   constructor(protected readonly txManager: TransactionManager) {
     super(Food);
   }
@@ -16,7 +22,9 @@ export class FoodRepository extends GenericTypeOrmRepository<Food> {
     return Food.name;
   }
 
-  async getFoods(getFoodsQueryDto: GetFoodsQueryDto): Promise<any> {
+  async getFoods(
+    getFoodsQueryDto: GetFoodsQueryDto,
+  ): Promise<PaginationResponse<Food>> {
     const { page, take, foodCd, foodName, researchYear, makerName } =
       getFoodsQueryDto;
 
@@ -51,8 +59,8 @@ export class FoodRepository extends GenericTypeOrmRepository<Food> {
       queryBuilder.getCount(),
     ]);
 
-    return new PaginationBuilder<any>()
-      .setData(data)
+    return new PaginationBuilder<Food>()
+      .setData(plainToInstance(Food, data))
       .setPage(page)
       .setTake(take)
       .setTotalCount(total)
