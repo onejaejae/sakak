@@ -1,13 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { CreateFoodDto } from 'src/common/request/food/createFoodDto';
+import { GetFoodsQueryDto } from 'src/common/request/food/getFoodsQueryDto';
 import { UpdateFoodDto } from 'src/common/request/food/updateFoodDto';
 import { Transactional } from 'src/core/decorator/transaction.decorator';
 import { FoodRepository } from 'src/entities/food/food.repository';
-import { Transaction } from 'typeorm';
 
 @Injectable()
 export class FoodService {
   constructor(private readonly foodRepository: FoodRepository) {}
+
+  async getFoods(getFoodQueryDto: GetFoodsQueryDto) {
+    return this.foodRepository.getFoods(getFoodQueryDto);
+  }
 
   async getFood(foodId: number) {
     return this.foodRepository.findByIdOrThrow(foodId);

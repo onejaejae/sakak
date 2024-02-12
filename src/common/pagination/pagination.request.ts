@@ -10,12 +10,12 @@ export class PaginationRequest {
   @IsOptional()
   @IsNumber()
   @Type(() => Number)
-  page = 1;
+  page = PaginationDefault.PAGE_DEFAULT;
 
   @IsOptional()
   @IsNumber()
   @Type(() => Number)
-  take = 10;
+  take = PaginationDefault.TAKE_DEFAULT;
 
   getSkip() {
     return (this.page - 1) * this.take;
