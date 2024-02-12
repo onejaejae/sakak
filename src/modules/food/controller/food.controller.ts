@@ -3,19 +3,25 @@ import {
   Controller,
   Delete,
   Get,
+  Inject,
   Param,
   Patch,
   Post,
   Query,
 } from '@nestjs/common';
-import { FoodService } from '../service/food.service';
 import { CreateFoodDto } from 'src/common/request/food/createFoodDto';
 import { UpdateFoodDto } from 'src/common/request/food/updateFoodDto';
 import { GetFoodsQueryDto } from 'src/common/request/food/getFoodsQueryDto';
+import {
+  FoodServiceKey,
+  IFoodService,
+} from '../interface/food-service.interface';
 
 @Controller('foods')
 export class FoodController {
-  constructor(private readonly foodService: FoodService) {}
+  constructor(
+    @Inject(FoodServiceKey) private readonly foodService: IFoodService,
+  ) {}
 
   @Get('')
   async getFoods(@Query() getFoodQueryDto: GetFoodsQueryDto) {

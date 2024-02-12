@@ -7,9 +7,10 @@ import {
   FoodRepositoryKey,
   IFoodRepository,
 } from 'src/entities/food/food-repository.interface';
+import { IFoodService } from '../interface/food-service.interface';
 
 @Injectable()
-export class FoodService {
+export class FoodService implements IFoodService {
   constructor(
     @Inject(FoodRepositoryKey) private readonly foodRepository: IFoodRepository,
   ) {}
