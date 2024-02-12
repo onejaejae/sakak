@@ -26,4 +26,9 @@ export class FoodService {
 
     return this.foodRepository.update(updatedFoodEntity);
   }
+
+  async deleteFood(foodId: number) {
+    await this.foodRepository.findByIdOrThrow(foodId);
+    await this.foodRepository.deleteById(foodId);
+  }
 }

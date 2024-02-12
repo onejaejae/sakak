@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { FoodService } from '../service/food.service';
 import { CreateFoodDto } from 'src/common/request/food/createFoodDto';
 import { UpdateFoodDto } from 'src/common/request/food/updateFoodDto';
@@ -23,5 +31,10 @@ export class FoodController {
     @Body() updateFoodDto: UpdateFoodDto,
   ) {
     return this.foodService.updateFood(foodId, updateFoodDto);
+  }
+
+  @Delete('/:foodId')
+  async deleteFood(@Param('foodId') foodId: number) {
+    return this.foodService.deleteFood(foodId);
   }
 }
