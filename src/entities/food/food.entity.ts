@@ -1,21 +1,25 @@
 import { UpdateFoodDto } from 'src/common/request/food/updateFoodDto';
 import { BaseEntity } from 'src/core/database/typeorm/base.entity';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, Index } from 'typeorm';
 
 @Entity({ name: 'foods' })
 export class Food extends BaseEntity {
+  @Index()
   @Column({ type: 'varchar', nullable: false, length: 10 })
   foodCd: string;
 
   @Column({ type: 'varchar', nullable: false, length: 10 })
   groupName: string;
 
+  @Index()
   @Column({ type: 'varchar', nullable: false, length: 10 })
   foodName: string;
 
+  @Index()
   @Column({ type: 'varchar', nullable: false, length: 5 })
   researchYear: string;
 
+  @Index()
   @Column({ type: 'varchar', nullable: false, length: 30 })
   makerName: string;
 
