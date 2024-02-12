@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import {
   EntityTarget,
+  FindManyOptions,
   FindOneOptions,
   Repository,
   SelectQueryBuilder,
@@ -8,11 +9,34 @@ import {
 import { TransactionManager } from './transaction.manager';
 import { ClassConstructor, plainToInstance } from 'class-transformer';
 import { RootEntity } from './root.entity';
+import { PaginationRequest } from 'src/common/pagination/pagination.request';
+import { PaginationBuilder } from 'src/common/pagination/pagination.builder';
 
 @Injectable()
 export abstract class GenericTypeOrmRepository<T extends RootEntity> {
   protected abstract readonly txManager: TransactionManager;
   constructor(private readonly classType: ClassConstructor<T>) {}
+
+  async paginate(
+    pagination: PaginationRequest,
+    findManyOption: FindManyOptions<T>,
+  ) {
+    const { take, page } = pagination;
+    const options = {
+      take,
+      skip: (page - 1) * take,
+      ...findManyOption,
+    };
+
+    const [data, total] = await this.getRepository().findAndCount(options);
+
+    return new PaginationBuilder<T>()
+      .setData(plainToInstance(this.classType, data))
+      .setPage(page)
+      .setTake(take)
+      .setTotalCount(total)
+      .build();
+  }
 
   async insertMany(models: T[]): Promise<T[]> {
     const results = await this.getRepository().save(models);
