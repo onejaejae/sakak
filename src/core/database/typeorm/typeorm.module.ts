@@ -16,7 +16,7 @@ export class TypeOrmModule {
 
         return {
           type: 'postgres',
-          //   host: dbConfig.DB_HOST,
+          host: dbConfig.DB_HOST,
           port: Number(dbConfig.DB_PORT),
           database: dbConfig.DB_DATABASE,
           username: dbConfig.DB_USER_NAME,
