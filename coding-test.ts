@@ -1,7 +1,7 @@
-export const generateAntSequence = (n) => {
-  let str1 = '1';
+export const generateAntSequence = (n: number) => {
+  let str1 = '21';
 
-  for (let i = 1; i <= n - 1; i++) {
+  for (let i = 3; i <= n - 1; i++) {
     let prev = '';
     let tmp = '';
     let cnt = 0;
@@ -29,5 +29,5 @@ export const generateAntSequence = (n) => {
   return parseInt(middleTwoDigits, 10);
 };
 
-const res = generateAntSequence(8);
+const res = generateAntSequence(5);
 console.log(res);
